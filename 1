@@ -55,7 +55,7 @@ def load_model(file):
     #checkpoint = torch.load(checkpoint_path)
     checkpoint = torch.load(file)
     
-    
+    model=None
     if checkpoint['classifier'] == 'vgg11':
         model = models.vgg11(pretrained=True)
         in_features = 25088
@@ -73,6 +73,8 @@ def load_model(file):
             param.requires_grad = False
     else:
         print('Sorry base architecture not recognised')
+        print('Loading VGG16 as default')
+        model = models.vgg16(pretrained=True)
     
     model.class_to_idx = checkpoint['class_to_idx']
     hidden_units = checkpoint['hidden_units']
